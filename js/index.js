@@ -39,18 +39,48 @@ class Ball {
 
 			if (this.x >= 490) this.d = "lu";
 			if (this.y <= 10) this.d = "rd";
+			bricks.forEach((item, index, object) => {
+				if (this.y >= item.y-this.r && this.y <= item.y+item.h+this.r && this.x >= item.x-this.r && this.x <= item.x+item.w+this.r) {
+					this.d = "rd";
+					object.splice(index, 1);
+					if (!bricks.length) {
+						alert("You Won! Hooray!");
+						location.reload();
+					}
+				}
+			});
 		} else if (this.d == "lu") {
 			this.x -= 2;
 			this.y -= 2;
 
 			if (this.x <= 10) this.d = "ru";
 			if (this.y <= 10) this.d = "ld";
+			bricks.forEach((item, index, object) => {
+				if (this.y >= item.y-this.r && this.y <= item.y+item.h+this.r && this.x >= item.x-this.r && this.x <= item.x+item.w+this.r) {
+					this.d = "ld";
+					object.splice(index, 1);
+					if (!bricks.length) {
+						alert("You Won! Hooray!");
+						location.reload();
+					}
+				}
+			});
 		} else if (this.d == "ld") {
 			this.x -= 2;
 			this.y += 2;
 
 			if (this.x <= 10) this.d = "rd";
-			if (this.y >= 290-player.h && this.x > player.x-this.r && this.x < player.x+player.w+this.r) this.d = "lu";
+			if (this.y >= 290-player.h-this.r && this.x > player.x-this.r && this.x < player.x+player.w+this.r) this.d = "lu";
+			bricks.forEach((item, index, object) => {
+				if (this.y >= item.y-this.r && this.y <= item.y+item.h+this.r && this.x >= item.x-this.r && this.x <= item.x+item.w+this.r) {
+					this.d = "lu";
+					object.splice(index, 1);
+					if (!bricks.length) {
+						alert("You Won! Hooray!");
+						location.reload();
+					}
+				}
+			});
 			if (this.y >= 290) {
 				lives--;
 				this.x = this.initX;
@@ -68,7 +98,17 @@ class Ball {
 			this.y += 2;
 
 			if (this.x >= 490) this.d = "ld";
-			if (this.y >= 290-player.h && this.x > player.x-this.r && this.x < player.x+player.w+this.r) this.d = "ru";
+			if (this.y >= 290-player.h-this.r && this.x > player.x-this.r && this.x < player.x+player.w+this.r) this.d = "ru";
+			bricks.forEach((item, index, object) => {
+				if (this.y >= item.y-this.r && this.y <= item.y+item.h+this.r && this.x >= item.x-this.r && this.x <= item.x+item.w+this.r) {
+					this.d = "ru";
+					object.splice(index, 1);
+					if (!bricks.length) {
+						alert("You Won! Hooray!");
+						location.reload();
+					}
+				}
+			});
 			if (this.y >= 290) {
 				lives--;
 				this.x = this.initX;
@@ -144,7 +184,7 @@ const player = new Player(200, 290, 100, 10, "black");
 const ball = new Ball(250, 280, 5, "black");
 for (let i=0; i<5; i++) {
 	for (let j=0; j<3; j++) {
-		bricks.push(new Brick(i*60+100, j*20+50, 50, 10, "black"));
+		bricks.push(new Brick(i*85+45, j*20+50, 75, 10, "black"));
 	}
 }
 
@@ -168,3 +208,5 @@ function draw() {
 }
 
 requestAnimationFrame(draw);
+
+document.querySelector(".loading").style.display = "none";
