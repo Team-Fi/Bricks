@@ -184,7 +184,8 @@ const player = new Player(200, 290, 100, 10, "black");
 const ball = new Ball(250, 280, 5, "black");
 for (let i=0; i<5; i++) {
 	for (let j=0; j<3; j++) {
-		bricks.push(new Brick(i*85+45, j*20+50, 75, 10, "black"));
+		const colorArray = ["red", "orange", "yellow", "green", "blue"];
+		bricks.push(new Brick(i*85+45, j*20+50, 75, 10, colorArray[i]));
 	}
 }
 
