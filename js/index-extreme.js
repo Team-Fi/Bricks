@@ -203,7 +203,7 @@ function draw() {
 
 	ctx.fillStyle = "black";
 	ctx.font = "32px sans-serif";
-	ctx.fillText("Lives: "+lives, 10, 40);
+	ctx.fillText("Extreme (Live 1)", 10, 40);
 
 	requestAnimationFrame(draw);
 }
