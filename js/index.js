@@ -4,7 +4,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 let bricks = [];
 let keys = [];
-let lives = 3;
+let lives = 2;
 
 class Brick {
 	constructor (x, y, w, h, c) {
