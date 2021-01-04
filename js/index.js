@@ -5,6 +5,7 @@ const ctx = canvas.getContext("2d");
 let bricks = [];
 let keys = [];
 let lives = 2;
+let mc = false;
 
 class Brick {
 	constructor (x, y, w, h, c) {
@@ -158,9 +159,19 @@ class Player {
 	}
 }
 
+const player = new Player(200, 290, 100, 10, "black");
+const ball = new Ball(250, 280, 5, "black");
+for (let i=0; i<5; i++) {
+	for (let j=0; j<3; j++) {
+		const colorArray = ["red", "orange", "yellow", "green", "blue"];
+		bricks.push(new Brick(i*85+45, j*20+50, 75, 10, colorArray[i]));
+	}
+}
+
 function onKeyDown(e) {
 	if (!e.repeat) {
 		keys.push(e.code);
+		if (e.code == "KeyM") mc = !mc;
 	}
 }
 
@@ -180,20 +191,21 @@ function keyPressed() {
 	}).includes(true);
 }
 
-const player = new Player(200, 290, 100, 10, "black");
-const ball = new Ball(250, 280, 5, "black");
-for (let i=0; i<5; i++) {
-	for (let j=0; j<3; j++) {
-		const colorArray = ["red", "orange", "yellow", "green", "blue"];
-		bricks.push(new Brick(i*85+45, j*20+50, 75, 10, colorArray[i]));
+function mouseControl(e) {
+	if (mc) {
+		player.x = e.clientX-(player.w/2)-canvas.getBoundingClientRect().left;
 	}
 }
+
+document.querySelector("canvas").addEventListener("mousemove", mouseControl);
 
 function draw() {
 	ctx.clearRect(0, 0, 500, 300)
 
-	if (keyPressed("ArrowLeft", "KeyA")) player.left();
-	if (keyPressed("ArrowRight", "KeyD")) player.right();
+	if (!mc) {
+		if (keyPressed("ArrowLeft", "KeyA")) player.left();
+		if (keyPressed("ArrowRight", "KeyD")) player.right();
+	}
 
 	player.draw();
 	ball.draw();
